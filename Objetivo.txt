@@ -1,0 +1,10 @@
+O trabalho (em DUPLA) consiste em desenvolver uma solução prática, que utilize recursos da OpenCV ou outra
+biblioteca para processamento de imagens (image processing) ou visão computacional (computer vision) ou
+reconhecimento de padrões (pattern recognition).
+
+
+- Uma interface gráfica (GUI) ao usuário (ou um embarcado que implemente comunicação de dados);
+- Um propósito de utilidade e aplicabilidade no contexto acadêmico ou social;
+- A aplicação de técnicas de manipulação de imagens (filtros, segmentação, ...) ao longo do processo;
+- Uma demonstração em vídeo do uso da ferramenta (~30-60 segundos);
+- Uma forma de aceitar arquivos de entrada diferentes dos testados.

@@ -1,5 +1,5 @@
-# Catraca-digital
-Trabalho para a disciplina de processamento de imagens baseado em um sistema para cadastro de imagens e outro sistema  que reconhece a face e mostra se o usuário esta permitido entrar ou não.
+# Controle de monitoramento
+Trabalho para a disciplina de processamento de imagens baseado em um sistema para cadastro de usuários por meio de imagens,outro sistema  que reconhece a face e mostra se o usuário esta permitido entrar ou não e caso esteja permitido o mesmo ganha o acesso a camera de seguranda(falsa) que monitora uma possivel invasão na propriedade.
 
 Para o projeto as principais bibliotecas utilizadas foram:
 
@@ -7,6 +7,7 @@ Para o projeto as principais bibliotecas utilizadas foram:
 - https://opencv.org/
 - https://docs.python.org/3/library/tkinter.html
 - https://pypi.org/project/customtkinter/0.3/
+- https://github.com/ultralytics/ultralytics
 
 ## Aplicação para cadastrar usuários
 
@@ -19,3 +20,11 @@ Para o projeto as principais bibliotecas utilizadas foram:
 ![image](https://github.com/user-attachments/assets/185bd225-912d-4148-8cba-343cbfe6a5e5)
 
 ![image](https://github.com/user-attachments/assets/9e343572-6104-4fd4-a220-58eefe74a677)
+
+## Aplicação de reconhecimento de invasão
+
+![image](https://github.com/user-attachments/assets/8c865249-f605-43a6-92d6-e0fdbcaeecd7)
+
+![image](https://github.com/user-attachments/assets/a75629e7-49a2-4c88-8598-2e8768594ee1)
+
+

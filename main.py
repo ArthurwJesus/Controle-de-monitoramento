@@ -2,9 +2,19 @@ import face_recognition
 import cv2
 import numpy as np
 import os
+from ultralytics import YOLO #yolov8 trabalha em cima do coco então possui uma lista de objetos que ele identifica
 
-
+#Capturando a webcam
 video_capture = cv2.VideoCapture(0)
+
+#Capturando o video
+video_house = cv2.VideoCapture('default_videos/ex01.mp4')
+
+# Modelo mais leve(não precisa de placa de video) porem com menor precisão, o video está bem claro e visivel então esse modelo ja serve mas se houver a necessidade de melhorar devemos trocar o modelo
+modelo = YOLO('yolov8n.pt')
+
+#Area da casa onde fica monitorando
+area = [510,230,910,700]
 
 
 def mountPass():
@@ -20,6 +30,54 @@ def mountPass():
         for i in arquivo:
             known_face_encodings.append(face_recognition.face_encodings(face_recognition.load_image_file("bd-images/"+i))[0])
 
+
+def house_check():
+
+    while True:
+        check,imgs = video_house.read()
+        imgs= cv2.resize(imgs,(1270,720))
+
+        # Delimitar uma linha para quando entrar disparar alarme
+        imgs2 = imgs.copy() # Utilizamos para criar uma area em cima da primeira
+        cv2.rectangle(imgs2,(area[0],area[1]),(area[2],area[3]),(0,255,0),-1)
+
+        # Detectar a pessoa(intruso)
+        results = modelo(imgs) # Processa cada frame da imagem
+        for objects in results:
+            
+            obj = objects.boxes
+            
+            for dados in obj:
+                #Coleta os pontos
+                x,y,w,h = dados.xyxy[0]
+                
+                #Transforma em inteiro
+                x,y,w,h = int(x),int(y),int(w),int(h)
+
+                cls = int(dados.cls[0])
+
+                #Coletar o centro
+                cx,cy = (x+w)//2 , (y+w)//2
+
+                #Se qusier ver o centro dos objetos descomentar
+                # cv2.circle(imgs,(cx,cy),5,(0,0,0),5)
+
+                #So coloca o retangulo quando encontra um objeto parecido com uma pessoa
+                if cls == 0:
+                    cv2.rectangle(imgs,(x,y),(w,h),(255,0,255),5)
+
+                    # verificando se o objeto(pessoa) está dentro da area de interesse
+                    if cx >= area[0] and cx <= area[2] and cy >= area[1] and cy <= area[3]:
+                        cv2.rectangle(imgs2,(area[0],area[1]),(area[2],area[3]),(0,0,255),-1)
+                        cv2.rectangle(imgs,(100,30),(470,80),(0,0,255),-1)
+                        cv2.putText(imgs,'Possivel Invasor',(105,65),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),3)
+
+
+
+        #Utilizando alfa e beta temos a obção de transparencia
+        imgsFinal = cv2.addWeighted(imgs2,0.5,imgs,0.5,0.0)
+        cv2.imshow('img',imgsFinal)
+        cv2.waitKey(1)
 
 
 mountPass()
@@ -63,6 +121,9 @@ while True:
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = "Permitido"
+
+                house_check()
+
                 # name = known_face_names[best_match_index]
 
             face_names.append(name)
